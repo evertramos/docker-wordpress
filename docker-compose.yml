@@ -35,7 +35,7 @@ services:
        VIRTUAL_PROTO: https
        VIRTUAL_PORT: 443
        LETSENCRYPT_HOST: domain.com, www.domain.com
-       LETSENCRYPT_EMAIL: youer_email@domain.com
+       LETSENCRYPT_EMAIL: your_email@domain.com
 
 networks:
     default:
