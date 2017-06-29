@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+   db:
+     container_name: db
+     image: mariadb:latest
+     restart: unless-stopped
+     volumes:
+        - /path/to/your/data/db:/var/lib/mysql
+     environment:
+       MYSQL_ROOT_PASSWORD: root_password
+       MYSQL_DATABASE: database_name
+       MYSQL_USER: user_name
+       MYSQL_PASSWORD: user_password
+
+   wordpress:
+     depends_on:
+       - db
+     container_name: wordpress
+     build:
+       context: ./
+     restart: unless-stopped
+     expose:
+           - "443"
+     volumes:
+       - /path/to/your/data/wordpress:/var/www/html
+       - /path/to/your/data/wp-content:/var/www/html/wp-content
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_NAME: wordpress
+       WORDPRESS_DB_USER: user_name
+       WORDPRESS_DB_PASSWORD: user_password
+       WORDPRESS_TABLE_PREFIX: wp_
+       VIRTUAL_HOST: domain.com, www.domain.com
+       VIRTUAL_PROTO: https
+       VIRTUAL_PORT: 443
+       LETSENCRYPT_HOST: domain.com, www.domain.com
+       LETSENCRYPT_EMAIL: youer_email@domain.com
+
+networks:
+    default:
+       external:
+         name: webproxy
