@@ -16,9 +16,8 @@ services:
    wordpress:
      depends_on:
        - db
+     image: wordpress:latest
      container_name: wordpress
-     build:
-       context: ./
      restart: unless-stopped
      expose:
            - "443"
