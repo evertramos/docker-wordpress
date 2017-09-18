@@ -40,6 +40,8 @@ services:
      build:
        context: ./
      restart: unless-stopped
+     extra_hosts:
+        - "api.wordpress.org:66.155.40.203"
      expose:
            - "443"
      volumes:
