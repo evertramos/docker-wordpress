@@ -17,11 +17,8 @@ services:
      depends_on:
        - db
      container_name: ${CONTAINER_WP_NAME}
-     build:
-       context: ./
+     image: wordpress:latest
      restart: unless-stopped
-     expose:
-           - "443"
      volumes:
        - ${WP_CORE}:/var/www/html
        - ${WP_CONTENT}:/var/www/html/wp-content
