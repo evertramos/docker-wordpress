@@ -1,6 +1,8 @@
 # Using Wordpress with SSL enabled integrated with NGINX proxy and autorenew LetsEncrypt certificates
 
-This docker-compose should be used with the NGINX Proxy as of sample here:
+![wordpress-docker-letsencrypt](https://github.com/evertramos/images/raw/master/wordpress.jpg)
+
+This docker-compose should be used with WebProxy (the NGINX Proxy) as of sample here:
 
 [https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
 
@@ -22,89 +24,94 @@ version: '3'
 
 services:
    db:
-     container_name: db
+     container_name: ${CONTAINER_DB_NAME}
      image: mariadb:latest
      restart: unless-stopped
      volumes:
-        - /path/to/your/data/db:/var/lib/mysql
+        - ${DB_PATH}:/var/lib/mysql
      environment:
-       MYSQL_ROOT_PASSWORD: root_password
-       MYSQL_DATABASE: database_name
-       MYSQL_USER: user_name
-       MYSQL_PASSWORD: user_password
+       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+       MYSQL_DATABASE: ${MYSQL_DATABASE}
+       MYSQL_USER: ${MYSQL_USER}
+       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
    wordpress:
      depends_on:
        - db
-     container_name: wordpress
-     build:
-       context: ./
+     container_name: ${CONTAINER_WP_NAME}
+     image: wordpress:latest
      restart: unless-stopped
-     expose:
-           - "443"
      volumes:
-       - /path/to/your/data/wordpress:/var/www/html
-       - /path/to/your/data/wp-content:/var/www/html/wp-content
+       - ${WP_CORE}:/var/www/html
+       - ${WP_CONTENT}:/var/www/html/wp-content
      environment:
-       WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_NAME: wordpress
-       WORDPRESS_DB_USER: user_name
-       WORDPRESS_DB_PASSWORD: user_password
-       WORDPRESS_TABLE_PREFIX: wp_
-       VIRTUAL_HOST: domain.com, www.domain.com
-       VIRTUAL_PROTO: https
-       VIRTUAL_PORT: 443
-       LETSENCRYPT_HOST: domain.com, www.domain.com
-       LETSENCRYPT_EMAIL: your_email@domain.com
-```
+       WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
+       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+       WORDPRESS_DB_USER: ${MYSQL_USER}
+       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+       VIRTUAL_HOST: ${DOMAINS}
+       LETSENCRYPT_HOST: ${DOMAINS}
+       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL} 
 
-```bash
-# Dockerfile with SSL activated
-
-FROM wordpress
-
-RUN apt-get update && \
-    apt-get install -y  --no-install-recommends ssl-cert && \
-    rm -r /var/lib/apt/lists/* && \
-    a2enmod ssl && \
-    a2ensite default-ssl
-
-EXPOSE 80
-EXPOSE 443
-```
-
-2. Change the file `docker-compose.yml` with you own settings:
-
-2.1. Use a specific network (optional)
-
-In order to use an specific network add the following lines at the end of your file:
-```bash
 networks:
     default:
        external:
-         name: webproxy
+name: ${NETWORK}
 ```
 
->Must be the same network used by your nginx services (_proxy, generator and letsencrypt_)
+2. Make a copy of our .env.sample and rename it to .env:
 
-2.2. Change the configuration path where you will locate the nginx files
+Update this file with your preferences.
 
 ```bash
-    volumes:
-      - /CHANGE/HERE/db:/var/lib/mysql
+# .env file to set up your wordpress site
 
-    volumes:
-      - /CHANGE/HERE/wordpress:/var/www/html
-      - /CHANGE/HERE/wp-content:/var/www/html/wp-content
+#
+# Network name
+# 
+# The network name must be the same name of your webproxy (proxy container)
+# as of https://github.com/evertramos/webproxy
+#
+NETWORK=webproxy
+
+#
+# Database Container configuration
+# We recommend MySQL or MariaDB - please update docker-compose file if needed.
+#
+CONTAINER_DB_NAME=db
+
+# Path to store your database
+DB_PATH=/path/to/your/local/database/folder
+
+# Root password for your database
+MYSQL_ROOT_PASSWORD=root_password
+
+# Database name, user and password for your wordpress
+MYSQL_DATABASE=database_name
+MYSQL_USER=user_name
+MYSQL_PASSWORD=user_password
+
+#
+# Wordpress Container configuration
+#
+CONTAINER_WP_NAME=wordpress
+
+# Path to store your wordpress files
+WP_CORE=/path/to/your/wordpress/core/files
+WP_CONTENT=/path/to/your/wordpress/wp-content
+
+# Table prefix
+WORDPRESS_TABLE_PREFIX=wp_
+
+# Your domain (or domains)
+DOMAINS=domain.com,www.domain.com
+
+# Your email for Let's Encrypt register
+LETSENCRYPT_EMAIL=your_email@domain.com
 ```
 
-2.3. Set your domain name and email
-
-```bash
-       VIRTUAL_HOST: YOUR_DOCMAIN.com, www.YOUR_DOCMAIN.com
-       LETSENCRYPT_HOST: YOUR_DOCMAIN.com, www.YOUR_DOCMAIN.com
-       LETSENCRYPT_EMAIL: YOUR_EMAIL@YOUR_DOCMAIN.com
-```
+>Must be the same network used by your WebProxy.
 
 3. Start your project
 
@@ -112,11 +119,15 @@ networks:
 docker-compose up -d
 ```
 
-**Be patinet** - when you first run a container to get new certificates, it may take a few minuts in order to get everything up and running, my own case, took almos 4 minutes to get LetsEncyrpt settled and proxy ready to go.
+**Be patinet** - when you first run a container to get new certificates, it may take a few minutes.
 
-Any further information please check:
+## WebProxy
 
-1. [@JrCs](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion).
-2. [@jwilder](https://github.com/jwilder/nginx-proxy)
-3. [@jwilder](https://github.com/jwilder/docker-gen)
+[WebProxy](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
 
+
+## Full Source
+
+1. [@jwilder](https://github.com/jwilder/nginx-proxy)
+2. [@jwilder](https://github.com/jwilder/docker-gen)
+3. [@JrCs](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion).
