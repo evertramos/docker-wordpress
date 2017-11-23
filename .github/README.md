@@ -2,7 +2,7 @@
 
 ![wordpress-docker-letsencrypt](https://github.com/evertramos/images/raw/master/wordpress.jpg)
 
-This docker-compose should be used with WebProxy (the NGINX Proxy) as of sample here:
+This docker-compose should be used with WebProxy (the NGINX Proxy):
 
 [https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
 
