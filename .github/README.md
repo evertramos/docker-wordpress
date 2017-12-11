@@ -57,7 +57,7 @@ services:
 networks:
     default:
        external:
-name: ${NETWORK}
+         name: ${NETWORK}
 ```
 
 2. Make a copy of our .env.sample and rename it to .env:
@@ -70,8 +70,8 @@ Update this file with your preferences.
 #
 # Network name
 # 
-# The network name must be the same name of your webproxy (proxy container)
-# as of https://github.com/evertramos/webproxy
+# Your container app must use a network conencted to your webproxy 
+# https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion
 #
 NETWORK=webproxy
 
@@ -111,7 +111,7 @@ DOMAINS=domain.com,www.domain.com
 LETSENCRYPT_EMAIL=your_email@domain.com
 ```
 
->Must be the same network used by your WebProxy.
+>This container must use a network connected to your webproxy or the same network of your webproxy.
 
 3. Start your project
 
@@ -123,7 +123,7 @@ docker-compose up -d
 
 ## WebProxy
 
-[WebProxy](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
+[WebProxy - docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
 
 
 ## Full Source
