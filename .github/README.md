@@ -119,7 +119,7 @@ LETSENCRYPT_EMAIL=your_email@domain.com
 docker-compose up -d
 ```
 
-**Be patinet** - when you first run a container to get new certificates, it may take a few minutes.
+**Be patient** - when you first run a container to get new certificates, it may take a few minutes.
 
 ## WebProxy
 
