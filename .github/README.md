@@ -54,6 +54,15 @@ services:
        LETSENCRYPT_HOST: ${DOMAINS}
        LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL} 
 
+#   wpcli:
+#     image: tatemz/wp-cli
+#     volumes:
+#       - ${WP_CORE}:/var/www/html
+#       - ${WP_CONTENT}:/var/www/html/wp-content
+#     depends_on:
+#       - db
+#     entrypoint: wp
+
 networks:
     default:
        external:
@@ -124,6 +133,55 @@ docker-compose up -d
 ## WebProxy
 
 [WebProxy - docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
+
+----
+
+# Further Options
+
+## wp-cli (https://wp-cli.org/)
+
+For whoever uses *wp-cli* here is how to implement it on this repo. 
+
+
+i. Take down your services
+
+```bash
+docker-compose down 
+```
+
+ii. Uncomment the following lines on _docker-compose.yml_:
+
+```bash
+#   wpcli:
+#     image: tatemz/wp-cli
+#     volumes:
+#       - ${WP_CORE}:/var/www/html
+#       - ${WP_CONTENT}:/var/www/html/wp-content
+#     depends_on:
+#       - db
+#     entrypoint: wp
+```
+
+iii. Start your services again
+
+```bash
+docker-compose up -d
+```
+
+iv. Test to see if it´s working
+
+```bash
+./wp-cli-test.sh
+
+```
+
+If you would, add the alias "wp" to your `.bash_aliases`:
+
+```bash
+alias wp="docker-compose run --rm wpcli"
+```
+
+Next time you need to run a wp-cli command just go to where you have your docker-compose file and run a `wp` command.
 
 ----
 

@@ -33,6 +33,15 @@ services:
        LETSENCRYPT_HOST: ${DOMAINS}
        LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL} 
 
+#   wpcli:
+#     image: tatemz/wp-cli
+#     volumes:
+#       - ${WP_CORE}:/var/www/html
+#       - ${WP_CONTENT}:/var/www/html/wp-content
+#     depends_on:
+#       - db
+#     entrypoint: wp
+
 networks:
     default:
        external:
