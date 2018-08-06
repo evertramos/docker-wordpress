@@ -130,6 +130,13 @@ docker-compose up -d
 
 **Be patient** - when you first run a container to get new certificates, it may take a few minutes.
 
+----
+
+### Make sure the wordpress data files has user and group set to **www-data**, so you could update, install, delete files from your admin panel.
+
+----
+
+
 ## WebProxy
 
 [WebProxy - docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
