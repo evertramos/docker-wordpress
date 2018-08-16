@@ -14,7 +14,7 @@ After everything is settle, and you have your three containers running (_proxy, 
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/evertramos/wordpress-docker-letsencrypt.git
+git clone https://github.com/evertramos/docker-wordpress-letsencrypt.git
 ```
 
 Or just copy the content of `docker-compose.yml` and the `Dockerfile`, as of below:
