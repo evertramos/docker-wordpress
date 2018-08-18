@@ -192,6 +192,13 @@ Next time you need to run a wp-cli command just go to where you have your docker
 
 ----
 
+## Backup Option
+
+We developed a backup option for this set up which you can find more details here:
+
+[Docker Wordpress Backup](https://github.com/evertramos/docker-wordpress-backup)
+
+
 ## Issues
 
 Please be advised that if are running docker on azure servers you must mount your database in your disks partitions (exemple: `/mnt/data/`) so your db container can work. This is a some kind of issue regarding Hyper-V sharing drivers... not really sure why.
