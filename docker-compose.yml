@@ -31,7 +31,10 @@ services:
        WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
        VIRTUAL_HOST: ${DOMAINS}
        LETSENCRYPT_HOST: ${DOMAINS}
-       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL} 
+       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+     logging:
+       options:
+         max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
 
 #   wpcli:
 #     image: tatemz/wp-cli
