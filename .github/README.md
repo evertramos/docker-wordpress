@@ -69,6 +69,8 @@ networks:
          name: ${NETWORK}
 ```
 
+> **[IMPORTANT]** Make sure to update your **services** name for each application so it does not conflicts with another service, such as where we have **db** you could use **site1-db**, and **wordpress** you could use **site1-wordpress**. Update this to site2 when you put up a new site.
+
 2. Make a copy of our .env.sample and rename it to .env:
 
 Update this file with your preferences.
