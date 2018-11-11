@@ -22,7 +22,7 @@ services:
      volumes:
        - ${WP_CORE}:/var/www/html
        - ${WP_CONTENT}:/var/www/html/wp-content
-       - ./conf.d/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
+       - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
      environment:
        WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
        WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
