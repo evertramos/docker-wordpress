@@ -3,7 +3,7 @@ version: '3'
 services:
    db:
      container_name: ${CONTAINER_DB_NAME}
-     image: mariadb:latest
+     image: mysql:5.7
      restart: unless-stopped
      volumes:
         - ${DB_PATH}:/var/lib/mysql
@@ -23,6 +23,7 @@ services:
        - ${WP_CORE}:/var/www/html
        - ${WP_CONTENT}:/var/www/html/wp-content
        - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+       - ./conf.d/php.ini:/usr/local/etc/php/php.ini
      environment:
        WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
        WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
