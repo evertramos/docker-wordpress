@@ -17,7 +17,7 @@ services:
      depends_on:
        - db
      container_name: ${CONTAINER_WP_NAME}
-     image: wordpress:latest
+     image: wordpress:${WP_VERSION:-latest}
      restart: unless-stopped
      volumes:
        - ${WP_CORE}:/var/www/html
