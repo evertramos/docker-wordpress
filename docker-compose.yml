@@ -3,7 +3,7 @@ version: '3'
 services:
    db:
      container_name: ${CONTAINER_DB_NAME}
-     image: mariadb:latest
+     image: mariadb:${DB_VERSION:-latest}
      restart: unless-stopped
      volumes:
         - ${DB_PATH}:/var/lib/mysql
