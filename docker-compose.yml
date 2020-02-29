@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-   db:
+   new-site-db:
      container_name: ${CONTAINER_DB_NAME}
      image: mariadb:${DB_VERSION:-latest}
      restart: unless-stopped
@@ -13,9 +13,9 @@ services:
        MYSQL_USER: ${MYSQL_USER}
        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-   wordpress:
+   new-site-wordpress:
      depends_on:
-       - db
+       - new-site-db
      container_name: ${CONTAINER_WP_NAME}
      image: wordpress:${WP_VERSION:-latest}
      restart: unless-stopped
@@ -36,14 +36,14 @@ services:
        options:
          max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
 
-#   wpcli:
-#     image: tatemz/wp-cli
-#     volumes:
-#       - ${WP_CORE}:/var/www/html
-#       - ${WP_CONTENT}:/var/www/html/wp-content
-#     depends_on:
-#       - db
-#     entrypoint: wp
+   wpcli:
+     image: tatemz/wp-cli
+     volumes:
+       - ${WP_CORE}:/var/www/html
+       - ${WP_CONTENT}:/var/www/html/wp-content
+     depends_on:
+       - new-site-db
+     entrypoint: wp
 
 networks:
     default:
