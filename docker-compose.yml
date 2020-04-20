@@ -45,15 +45,15 @@ services:
        - new-site-db
      entrypoint: wp
 
-   new-site-pma:
-     image: phpmyadmin/phpmyadmin:${PMA_VERSION:-latest}
-     links:
-       - new-site-db
-     environment:
-       PMA_ARBITRARY: 1
-       VIRTUAL_HOST: ${PMA_DOMAIN}
-       LETSENCRYPT_HOST: ${PMA_DOMAIN}
-       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+#   new-site-pma:
+#     image: phpmyadmin/phpmyadmin:${PMA_VERSION:-latest}
+#     links:
+#       - new-site-db
+#     environment:
+#       PMA_ARBITRARY: 1
+#       VIRTUAL_HOST: ${PMA_DOMAIN}
+#       LETSENCRYPT_HOST: ${PMA_DOMAIN}
+#       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
 
 networks:
     default:
