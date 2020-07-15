@@ -3,10 +3,10 @@ version: '3'
 services:
    new-site-db:
      container_name: ${CONTAINER_DB_NAME}
-     image: mariadb:${DB_VERSION:-latest}
+     image: ${DB_IMAGE:-mariadb}:${DB_VERSION:-latest}
      restart: unless-stopped
      volumes:
-        - ${DB_PATH}:/var/lib/mysql
+        - ${DB_FILES}:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
        MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -20,8 +20,7 @@ services:
      image: wordpress:${WP_VERSION:-latest}
      restart: unless-stopped
      volumes:
-       - ${WP_CORE}:/var/www/html
-       - ${WP_CONTENT}:/var/www/html/wp-content
+       - ${WP_FILES}:/var/www/html
        - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
      environment:
        WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
@@ -39,21 +38,10 @@ services:
    wpcli:
      image: tatemz/wp-cli
      volumes:
-       - ${WP_CORE}:/var/www/html
-       - ${WP_CONTENT}:/var/www/html/wp-content
+       - ${WP_FILES}:/var/www/html
      depends_on:
        - new-site-db
      entrypoint: wp
-
-#   new-site-pma:
-#     image: phpmyadmin/phpmyadmin:${PMA_VERSION:-latest}
-#     links:
-#       - new-site-db
-#     environment:
-#       PMA_ARBITRARY: 1
-#       VIRTUAL_HOST: ${PMA_DOMAIN}
-#       LETSENCRYPT_HOST: ${PMA_DOMAIN}
-#       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
 
 networks:
     default:
