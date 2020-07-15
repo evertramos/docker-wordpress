@@ -1,4 +1,4 @@
-# Dccker Wordpress [automation]
+## Dccker Wordpress [automation]
 
 This repo is part of a larger script to changes in the files must be reviewed. 
 
@@ -13,7 +13,7 @@ This docker-compose should be used with WebProxy (the NGINX Proxy):
 [https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
 
 
-## Usage
+### Usage
 
 After everything is settle, and you have your three containers running (_proxy, generator and letsencrypt_) you do the following:
 
@@ -43,25 +43,25 @@ docker-compose up -d
 
 ----
 
-### Make sure the wordpress data files has user and group set to **www-data**, so you could update, install, delete files from your admin panel.
+#### Make sure the wordpress data files has user and group set to **www-data**, so you could update, install, delete files from your admin panel.
 
 ----
 
 
-## WebProxy
+#### WebProxy
 
 [WebProxy - docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
 
 ----
 
-# Further Options
+### Further Options
 
-## wp-cli (https://wp-cli.org/)
+#### wp-cli (https://wp-cli.org/)
 
 For whoever uses *wp-cli* here is how to implement it on this repo. 
 
 
-i. Test to see if it´s working
+Test to see if it´s working
 
 ```bash
 ./wp-cli-test.sh
@@ -78,9 +78,9 @@ Next time you need to run a wp-cli command just go to where you have your docker
 
 ----
 
-## Known Issues
+### Known Issues
 
-### Azure
+#### Azure
 
 Running docker on Azure servers you must mount your database in your disks partitions (example: `/mnt/data/`) so your db container can work. This is a some kind of issue regarding Hyper-V sharing drivers... not really sure why.
 
