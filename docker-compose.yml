@@ -1,49 +1,49 @@
 version: '3'
 
 services:
-   new-site-db:
-     container_name: ${CONTAINER_DB_NAME}
-     image: ${DB_IMAGE:-mariadb}:${DB_VERSION:-latest}
-     restart: unless-stopped
-     volumes:
-        - ${DB_FILES}:/var/lib/mysql
-     environment:
-       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-       MYSQL_DATABASE: ${MYSQL_DATABASE}
-       MYSQL_USER: ${MYSQL_USER}
-       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  new-site-db:
+    container_name: ${CONTAINER_DB_NAME}
+    image: ${DB_IMAGE:-mariadb}:${DB_VERSION:-latest}
+    restart: unless-stopped
+    volumes:
+      - ${DB_FILES}:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
-   new-site-wordpress:
-     depends_on:
-       - new-site-db
-     container_name: ${CONTAINER_WP_NAME}
-     image: wordpress:${WP_VERSION:-latest}
-     restart: unless-stopped
-     volumes:
-       - ${WP_FILES}:/var/www/html
-       - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
-     environment:
-       WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
-       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
-       WORDPRESS_DB_USER: ${MYSQL_USER}
-       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
-       VIRTUAL_HOST: ${DOMAINS}
-       LETSENCRYPT_HOST: ${DOMAINS}
-       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
-     logging:
-       options:
-         max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
+  new-site-wordpress:
+    depends_on:
+      - new-site-db
+    container_name: ${CONTAINER_SITE_NAME}
+    image: ${SITE_IMAGE:-wordpress}:${SITE_VERSION:-latest}
+    restart: unless-stopped
+    volumes:
+      - ${SITE_FILES}:/var/www/html
+      - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+    environment:
+      WORDPRESS_DB_HOST: ${CONTAINER_DB_NAME}:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      VIRTUAL_HOST: ${DOMAINS}
+      LETSENCRYPT_HOST: ${DOMAINS}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+    logging:
+      options:
+        max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
 
-   wpcli:
-     image: tatemz/wp-cli
-     volumes:
-       - ${WP_FILES}:/var/www/html
-     depends_on:
-       - new-site-db
-     entrypoint: wp
+  wpcli:
+    image: tatemz/wp-cli
+    volumes:
+      - ${SITE_FILES}:/var/www/html
+    depends_on:
+      - new-site-db
+    entrypoint: wp
 
 networks:
-    default:
-       external:
-         name: ${NETWORK}
+   default:
+     external:
+       name: ${NETWORK}
