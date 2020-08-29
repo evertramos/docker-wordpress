@@ -20,7 +20,7 @@ After everything is settle, and you have your three containers running (_proxy, 
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/evertramos/docker-wordpress-letsencrypt.git
+git clone https://github.com/evertramos/docker-wordpress.git
 ```
 
 2. Update the service name in your _docker-compose.yml_ file **VERY IMPORTANT**
