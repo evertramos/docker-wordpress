@@ -1,4 +1,4 @@
-## Dccker Wordpress [automation]
+## Docker Wordpress [automation]
 
 This repo is part of a larger script to changes in the files must be reviewed. 
 
