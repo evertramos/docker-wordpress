@@ -1,87 +1,36 @@
-## Docker Wordpress [automation]
+# Docker Wordpress 🚀
 
-This repo is part of a larger script to changes in the files must be reviewed. 
-
-If you are looking of the previous version check branch basic. 
-
-# Using Wordpress with SSL enabled integrated with NGINX proxy and autorenew LetsEncrypt certificates
+<p align="center">
+    <a target="_blank" href="https://docs.docker.com/"><img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white" /></a>
+    <a target="_blank" href="https://developer.wordpress.org/"><img src="https://img.shields.io/badge/Wordpress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" /></a>
+</p>
 
 ![wordpress-docker-letsencrypt](https://github.com/evertramos/images/raw/master/wordpress.jpg)
 
-This docker-compose should be used with WebProxy (the NGINX Proxy):
 
-[https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
+## How to start 🔰
 
+This script was designed to work along with [**Server Automation**](https://github.com/evertramos/server-automation),
+where you will be able to start a new WordPress site in less than a minute. 
+You may use directly with your [NGINX Proxy Automation](https://github.com/evertramos/nginx-proxy-automation) 
+following the [previous docs](./docs/v0.5.md). 
 
-### Usage
+## Known Issues 💭 
 
-After everything is settle, and you have your three containers running (_proxy, generator and letsencrypt_) you do the following:
-
-1. Clone this repository:
-
-```bash
-git clone https://github.com/evertramos/docker-wordpress.git
-```
-
-2. Update the service name in your _docker-compose.yml_ file **VERY IMPORTANT**
-
-You must use any name, but make sure it is a unique service name in your environment, otherwise it will conflict with other services. 
-
-3. Configure your _.env_ file:
-
-Copy .env.sample to .env and update with your data
-
-> The proxy network must match the network name you have set in the proxy settings. 
-
-4. Start your project
-
-```bash
-docker-compose up -d
-```
-
-**Be patient** - when you first run this repo, the database might take sometime to launch and the process of getting a new certificate for your domain might take some time.
-
-----
-
-#### Make sure the wordpress data files has user and group set to **www-data**, so you could update, install, delete files from your admin panel.
-
-----
-
-
-#### WebProxy
-
-[WebProxy - docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
-
-----
-
-### Further Options
-
-#### wp-cli (https://wp-cli.org/)
-
-For whoever uses *wp-cli* here is how to implement it on this repo. 
-
-
-Test to see if it´s working
-
-```bash
-./wp-cli-test.sh
-
-```
-
-If you would, add the alias "wp" to your `.bash_aliases`:
-
-```bash
-alias wp="docker-compose run --rm wpcli"
-```
-
-Next time you need to run a wp-cli command just go to where you have your docker-compose file and run a `wp` command.
-
-----
-
-### Known Issues
-
-#### Azure
+### 1. Azure
 
 Running docker on Azure servers you must mount your database in your disks partitions (example: `/mnt/data/`) so your db container can work. This is a some kind of issue regarding Hyper-V sharing drivers... not really sure why.
 
+
+## Versions
+
+The versioning of this project matches the same tag of 
+[Server Automation](https://github.com/evertramos/server-automation) and 
+[NGINX proxy automation](https://github.com/evertramos/nginx-proxy-automation).
+
+Table of compatibility:
+
+docker-wordpress    |   nginx-proxy-automation  |   server-automation
+:---:               |   :---:                   |   :---:
+v0.5                |   v0.5                    |   v0.5
 
