@@ -61,7 +61,7 @@ services:
     networks:
       - docker-wordpress-db-net
     volumes:
-      - ${SITE_FILES}:/var/www/html
+      - ${DOCKER_WORDPRESS_SITE_FILES}:/var/www/html
     depends_on:
       - docker-wordpress-new-db
     entrypoint: wp
