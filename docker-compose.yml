@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_WORDPRESS_DB_IMAGE:-mysql}:${DOCKER_WORDPRESS_DB_VERSION:-latest}
     restart: unless-stopped
     networks:
-      - docker-wordpress-proxy-network
+      - docker-wordpress-db-net
     volumes:
       - ${DOCKER_WORDPRESS_DB_FILES}:/var/lib/mysql
     environment:
