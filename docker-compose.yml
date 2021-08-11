@@ -32,7 +32,7 @@ services:
       - docker-wordpress-db-net
     volumes:
       - ${DOCKER_WORDPRESS_SITE_FILES}:/var/www/html
-      - ./conf.d/php.ini:${PHP_INI_DIR}/conf.d/php.ini
+      - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
     environment:
       WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST:-docker-wordpress-new-db}:3306
       WORDPRESS_DB_NAME: ${DOCKER_WORDPRESS_MYSQL_DATABASE}
