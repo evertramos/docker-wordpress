@@ -5,6 +5,11 @@ services:
     image: ${DOCKER_WORDPRESS_DB_IMAGE:-mysql}:${DOCKER_WORDPRESS_DB_VERSION:-latest}
     container_name: ${DOCKER_WORDPRESS_DB_CONTAINER_NAME}
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: ${DOCKER_WORDPRESS_MYSQL_CPU_LIMIT:-'0.5'}
+          memory: ${DOCKER_WORDPRESS_MYSQL_MEMORY_LIMIT:-300M}
     networks:
       - docker-wordpress-db-net
     volumes:
@@ -27,6 +32,11 @@ services:
     image: ${DOCKER_WORDPRESS_SITE_IMAGE:-wordpress}:${DOCKER_WORDPRESS_SITE_VERSION:-latest}
     container_name: ${DOCKER_WORDPRESS_SITE_CONTAINER_NAME}
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: ${DOCKER_WORDPRESS_SITE_CPU_LIMIT:-'0.5'}
+          memory: ${DOCKER_WORDPRESS_SITE_MEMORY_LIMIT:-300M}
     networks:
       - docker-wordpress-proxy-network
       - docker-wordpress-db-net
