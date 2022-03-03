@@ -48,9 +48,9 @@ docker-compose up -d
 ----
 
 
-#### WebProxy
+#### Proxy
 
-[WebProxy - docker-compose-letsencrypt-nginx-proxy-companion](https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion)
+[Proxy - nginx-proxy-automation](https://github.com/evertramos/nginx-proxy-automation)
 
 ----
 
