@@ -1,3 +1,5 @@
+# THIS BRANCH WILL BE DELETED SOON, PLEASE UPDATE TO BRANCH **'MAIN'**
+
 # Docker Wordpress 🚀
 
 <p align="center">
