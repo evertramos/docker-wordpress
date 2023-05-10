@@ -71,7 +71,13 @@ services:
         max-file: ${DOCKER_WORDPRESS_SITE_LOG_MAX_FILE:-10}
 
   wpcli:
-    image: tatemz/wp-cli
+    image: wordpress:cli
+    environment:
+      WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST:-docker-wordpress-new-db}:3306
+      WORDPRESS_DB_NAME: ${DOCKER_WORDPRESS_MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${DOCKER_WORDPRESS_MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${DOCKER_WORDPRESS_MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${DOCKER_WORDPRESS_TABLE_PREFIX}
     networks:
       - docker-wordpress-db-net
     volumes:
