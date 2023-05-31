@@ -50,6 +50,8 @@ services:
       WORDPRESS_DB_PASSWORD: ${DOCKER_WORDPRESS_MYSQL_PASSWORD}
       WORDPRESS_TABLE_PREFIX: ${DOCKER_WORDPRESS_TABLE_PREFIX}
       VIRTUAL_HOST: ${DOCKER_WORDPRESS_DOMAINS}
+#      VIRTUAL_PATH: ${DOCKER_WORDPRESS_VIRTUAL_PATH:-"/"}
+#      VIRTUAL_DEST: ${DOCKER_WORDPRESS_VIRTUAL_DEST:-"/"}
       LETSENCRYPT_HOST: ${DOCKER_WORDPRESS_DOMAINS}
       LETSENCRYPT_EMAIL: ${DOCKER_WORDPRESS_LETSENCRYPT_EMAIL}
 #      WORDPRESS_AUTH_KEY: ${DOCKER_WORDPRESS_AUTH_KEY:-null}
@@ -69,7 +71,13 @@ services:
         max-file: ${DOCKER_WORDPRESS_SITE_LOG_MAX_FILE:-10}
 
   wpcli:
-    image: tatemz/wp-cli
+    image: wordpress:cli
+    environment:
+      WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST:-docker-wordpress-new-db}:3306
+      WORDPRESS_DB_NAME: ${DOCKER_WORDPRESS_MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${DOCKER_WORDPRESS_MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${DOCKER_WORDPRESS_MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${DOCKER_WORDPRESS_TABLE_PREFIX}
     networks:
       - docker-wordpress-db-net
     volumes:
@@ -82,3 +90,4 @@ networks:
   docker-wordpress-proxy-network:
     external: true
   docker-wordpress-db-net:
+
