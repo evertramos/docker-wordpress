@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   docker-wordpress-new-db:
     image: ${DOCKER_WORDPRESS_DB_IMAGE:-mysql}:${DOCKER_WORDPRESS_DB_VERSION:-latest}
