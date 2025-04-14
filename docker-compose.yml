@@ -70,6 +70,7 @@ services:
 
   wpcli:
     image: wordpress:cli
+    user: 33:33
     environment:
       WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST:-docker-wordpress-new-db}:3306
       WORDPRESS_DB_NAME: ${DOCKER_WORDPRESS_MYSQL_DATABASE}
