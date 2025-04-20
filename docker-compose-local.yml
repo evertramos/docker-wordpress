@@ -1,0 +1,61 @@
+services:
+  mysql-db:
+    image: ${DOCKER_WORDPRESS_DB_IMAGE:-mysql}:${DOCKER_WORDPRESS_DB_VERSION:-latest}
+    container_name: ${DOCKER_WORDPRESS_DB_CONTAINER_NAME:-mysql}
+    ports:
+      - "3306:3306"
+    volumes:
+      - docker-wordpress-db-files:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DOCKER_WORDPRESS_MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${DOCKER_WORDPRESS_MYSQL_DATABASE:-wordpress}
+      MYSQL_USER: ${DOCKER_WORDPRESS_MYSQL_USER:-wordpress}
+      MYSQL_PASSWORD: ${DOCKER_WORDPRESS_MYSQL_PASSWORD:-wordpress}
+
+  wordpress-site:
+    depends_on:
+      - mysql-db
+    image: ${DOCKER_WORDPRESS_SITE_IMAGE:-wordpress}:${DOCKER_WORDPRESS_SITE_VERSION:-latest}
+    container_name: ${DOCKER_WORDPRESS_SITE_CONTAINER_NAME:-wordpress}
+    ports:
+      - "8080:80"
+    volumes:
+      - docker-wordpress-site-files:/var/www/html
+      - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+    environment:
+      WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST:-mysql-db}:3306
+      WORDPRESS_DB_NAME: ${DOCKER_WORDPRESS_MYSQL_DATABASE:-wordpress}
+      WORDPRESS_DB_USER: ${DOCKER_WORDPRESS_MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${DOCKER_WORDPRESS_MYSQL_PASSWORD:-wordpress}
+#      WORDPRESS_TABLE_PREFIX: ${DOCKER_WORDPRESS_TABLE_PREFIX}
+#      WORDPRESS_AUTH_KEY: ${DOCKER_WORDPRESS_AUTH_KEY:-null}
+#      WORDPRESS_SECURE_AUTH_KEY: ${DOCKER_WORDPRESS_SECURE_AUTH_KEY:-null}
+#      WORDPRESS_LOGGED_IN_KEY: ${DOCKER_WORDPRESS_LOGGED_IN_KEY:-null}
+#      WORDPRESS_NONCE_KEY: ${DOCKER_WORDPRESS_NONCE_KEY:-null}
+#      WORDPRESS_AUTH_SALT: ${DOCKER_WORDPRESS_AUTH_SALT:-null}
+#      WORDPRESS_SECURE_AUTH_SALT: ${DOCKER_WORDPRESS_SECURE_AUTH_SALT:-null}
+#      WORDPRESS_LOGGED_IN_SALT: ${DOCKER_WORDPRESS_LOGGED_IN_SALT:-null}
+#      WORDPRESS_NONCE_SALT: ${DOCKER_WORDPRESS_NONCE_SALT:-null}
+#      WORDPRESS_DEBUG: ${DOCKER_WORDPRESS_DEBUG:-null}
+#      WORDPRESS_CONFIG_EXTRA: ${DOCKER_WORDPRESS_CONFIG_EXTRA:-null}
+
+  wpcli:
+    image: wordpress:cli
+    user: 33:33
+    environment:
+      WORDPRESS_DB_HOST: ${DOCKER_WORDPRESS_DB_HOST:-mysql-db}:3306
+      WORDPRESS_DB_NAME: ${DOCKER_WORDPRESS_MYSQL_DATABASE:-wordpress}
+      WORDPRESS_DB_USER: ${DOCKER_WORDPRESS_MYSQL_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${DOCKER_WORDPRESS_MYSQL_PASSWORD:-wordpress}
+#      WORDPRESS_TABLE_PREFIX: ${DOCKER_WORDPRESS_TABLE_PREFIX}
+    volumes:
+      - docker-wordpress-site-files:/var/www/html
+    depends_on:
+      - mysql-db
+    entrypoint: wp
+
+volumes:
+  docker-wordpress-db-files:
+    driver: local
+  docker-wordpress-site-files:
+    driver: local

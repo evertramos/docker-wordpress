@@ -10,18 +10,39 @@
 
 ## How to start 🔰
 
-This script was designed to work along with [**Server Automation**](https://github.com/evertramos/server-automation),
+This script was first designed to work along with [**Server Automation**](https://github.com/evertramos/server-automation),
 where you will be able to start a new WordPress site in less than a minute. 
-You may use directly with your [NGINX Proxy Automation](https://github.com/evertramos/nginx-proxy-automation) 
-following the [previous docs](./docs/v0.5.md). 
+
+### Developing locally
+
+If you want to run this project locally, you can do it by running the following command:
+
+```bash
+git clone https://github.com/evertramos/docker-wordpress.git
+cd docker-wordpress
+./setup.sh
+```
+
+This will start the containers and create a new database for you.
+
+### Migrating from local to production
+
+If you want to migrate your local site (wordpress files and database) to production, 
+you can do it by running the following command:
+
+:construction: Work in progress
 
 ## Known Issues 💭 
 
 ### 1. Azure
 
-Running docker on Azure servers you must mount your database in your disks partitions (example: `/mnt/data/`) so your db container can work. This is a some kind of issue regarding Hyper-V sharing drivers... not really sure why.
+Running docker on Azure servers you must mount your database in your disks partitions (example: `/mnt/data/`) 
+so your db container can work. 
 
-=======
+> This is a some kind of issue regarding Hyper-V sharing drivers... not really sure why. If you know what the issue id,
+> please, open an issue on GitHub and I will be glad to update this documentation.
+
+---
 
 ## Versions
 
