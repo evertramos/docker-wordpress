@@ -1,6 +1,6 @@
 services:
   mysql-db:
-    image: ${DOCKER_WORDPRESS_DB_IMAGE:-mysql}:${DOCKER_WORDPRESS_DB_VERSION:-latest}
+    image: ${DOCKER_WORDPRESS_DB_IMAGE:-mysql}:${DOCKER_WORDPRESS_DB_VERSION:-lts}
     container_name: ${DOCKER_WORDPRESS_DB_CONTAINER_NAME:-mysql}
     ports:
       - "3306:3306"

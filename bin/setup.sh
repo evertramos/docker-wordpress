@@ -2,6 +2,11 @@
 
 echo "Running setup.sh for local development environment..."
 
+COMMAND=${1:-"up"}
+
+# Get the script name and its file real path
+SCRIPT_PATH="$(dirname "$(readlink -f "$0")")"
+
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
     echo "Docker is not running. Please start Docker and try again."
@@ -15,7 +20,7 @@ if ! command -v docker compose &> /dev/null; then
 fi
 
 # Check if the Docker Compose file exists
-if [ ! -f docker-compose-local.yml ]; then
+if [ ! -f "${SCRIPT_PATH}/../docker-compose-local.yml" ]; then
     echo "docker-compose-local.yml file not found. Please ensure you are in the correct directory."
     exit 1
 fi
@@ -26,8 +31,14 @@ fi
 #    exit 1
 #fi
 
+# Run the Docker Compose command
+if [ "$COMMAND" != "up" ]; then
+    docker compose -f "${SCRIPT_PATH}/../docker-compose-local.yml" "${COMMAND}"
+    exit 0
+fi
+
 # Start the Docker containers
-docker compose -f docker-compose-local.yml up -d
+docker compose -f "${SCRIPT_PATH}/../docker-compose-local.yml" up -d
 
 
 exit 0

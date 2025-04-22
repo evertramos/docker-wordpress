@@ -20,7 +20,7 @@ If you want to run this project locally, you can do it by running the following 
 ```bash
 git clone https://github.com/evertramos/docker-wordpress.git
 cd docker-wordpress
-./setup.sh
+./bin/setup.sh
 ```
 
 This will start the containers and create a new database for you.
